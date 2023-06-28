@@ -17,6 +17,17 @@ const client = axios.create({
     timeout: 1000 * 5,
 })
 
+client.interceptors.response.use(
+    (response) => Promise.resolve(response.data),
+    error => {
+        const count = (error.config['axios-retry']?.retryCount)
+        if (RETRY_COUNT === count) {
+            ElMessage.error(`当前无法连接网络，请检查网络设备是否正常`)
+        }
+        return Promise.reject(error)
+    }
+);
+
 axiosRetry(client, {
     retries: RETRY_COUNT,
     shouldResetTimeout: true,
@@ -24,14 +35,9 @@ axiosRetry(client, {
         return retryCount * 1000;
     },
     retryCondition: (error) => {
-        if (error.message.includes('timeout') || RETRY_CODE.includes(error.response?.status)) {
+        if (error.message.includes('timeout') || error.message === 'Network Error' || RETRY_CODE.includes(error.response?.status || 0)) {
             const count = error.config['axios-retry']?.retryCount + 1
-            if (RETRY_COUNT === count) {
-                console.log(`请求失败次数上限${count}`)
-                ElMessage.error(`当前无法连接网络，请检查网络设备是否正常`)
-            } else {
-                ElMessage.error(`请求失败, 重新发起第${count}次请求`)
-            }
+            ElMessage.error(`请求失败, 重新发起第${count}次请求`)
             return true
         }
         return false
