@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+	"install-all": "npm install && cd pages && npm install",
     "server": "nodemon server/app.js",
-    "dev": "cd views && npm run dev"
+    "dev": "cd pages && npm run dev"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "body-parser": "^1.20.2"
+    "body-parser": "^1.20.2",
+    "vue-router": "^4.0.13"
   }
 }

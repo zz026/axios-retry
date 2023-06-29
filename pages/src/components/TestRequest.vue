@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import request from '../utils/request';
-import { ElMessage } from 'element-plus';
+import request from '@/utils/request';
+import { ElNotification } from 'element-plus';
 
 export default {
-  name: 'App',
+  name: 'TestRequest',
   setup() {
     const handleSuccess = () => {
       request
@@ -20,8 +20,11 @@ export default {
           }
         })
         .then((res) => {
-          console.log('r', res);
-          ElMessage.success('请求成功');
+          ElNotification({
+            title: '请求成功',
+            message: JSON.stringify(res),
+            type: 'success'
+          });
         });
     };
 
@@ -32,8 +35,11 @@ export default {
           timestamp: Date.now()
         })
         .then((res) => {
-          console.log('r', res);
-          ElMessage.success('请求成功');
+          ElNotification({
+            title: '请求成功',
+            message: JSON.stringify(res),
+            type: 'success'
+          });
         });
     };
 
@@ -44,8 +50,11 @@ export default {
           timestamp: Date.now()
         })
         .then((res) => {
-          console.log('r', res);
-          ElMessage.success('请求成功');
+          ElNotification({
+            title: '请求成功',
+            message: JSON.stringify(res),
+            type: 'success'
+          });
         });
     };
 
@@ -57,14 +66,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

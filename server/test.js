@@ -9,6 +9,12 @@ router.get('/success', (req, res) => {
     })
 })
 
+
+router.put('/error', (req, res) => {
+    console.log('data', req.body)
+    res.status(500).send('http 500')
+})
+
 router.post('/retrypost', (req, res) => {
     const flag = Math.floor(Math.random() * 10)
     console.log('flag', flag, req.body)
@@ -18,7 +24,7 @@ router.post('/retrypost', (req, res) => {
                 code: 0,
                 message: 'retry success ' + flag
             })
-        }, 1000 * 10)
+        }, 1000 * 60)
     } else {
         res.send({
             code: 0,
@@ -27,9 +33,5 @@ router.post('/retrypost', (req, res) => {
     }
 })
 
-router.put('/error', (req, res) => {
-    console.log('data', req.body)
-    res.status(500).send('http 500')
-})
 
 module.exports = router
